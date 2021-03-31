@@ -25,7 +25,7 @@ class Conexao {
 
   _inicializarBanco() async {
     var inicializar = PostgreSQLConnection('localhost', 5432, "backend",
-        username: "postgres", password: "666");
+        username: "postgres", password: "bem vidos1");
 
     await inicializar.open();
 

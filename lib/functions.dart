@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:backenddart/class/controller/buscaController.dart';
+import 'package:backenddart/class/controller/cadastroController.dart';
 import 'package:backenddart/conexao/conexao.dart';
 
 import 'package:functions_framework/functions_framework.dart';
@@ -11,43 +13,18 @@ import 'dart:core';
 
 @CloudFunction()
 FutureOr<Response> function(Request request) async {
+  /*
   //banco de dados
+  
   var connection = PostgreSQLConnection('localhost', 5432, 'backend',
       username: 'postgres', password: "bem vidos1");
   await connection.open();
-
-  Router app = Router();
-
-  app.get("/", (Request request) {
-    return Response.ok("está funcionando");
-  });
-
-  var banco = Conexao();
+*/
+  final app = Router();
 
   //criar usuario
 
-  app.post("/adicionarUser/<nome>/<idade>",
-      (Request request, String nome, String idade) async {
-    var idadee = int.tryParse(idade);
-
-    var insert = await banco.insert_user(nome, idadee);
-
-    return Response.ok("cadastro de: $nome sua idade é $idadee  ");
-  });
-
-// buscar lista usuário
-  app.get("/buscar_dados/<nome>/<idade>", (
-    Request request,
-    String nome,
-    String idade,
-  ) async {
-    var idadee = int.tryParse(idade);
-
-    List<List<dynamic>> read = await banco.buscar_user(nome, idadee);
-    print(read.toList());
-    return Response.ok("busca:" + read.toList().toString());
-  });
-
+/*
   //busca pelo nome do usuario
   app.get("/buscar/<nome>", (Request request, dynamic nome) async {
     List<List<dynamic>> busca =
@@ -79,6 +56,8 @@ FutureOr<Response> function(Request request) async {
     var update = await banco.alterar_user(nome, inid);
     return Response.ok(" usuario alterado ");
   });
-
+*/
+  app.mount('/user/', cadastroController().route);
+  app.mount("/busca/", buscaController().busca);
   return app(request);
 }

@@ -14,6 +14,7 @@ dependencies:
   postgres: ^2.2.0
 
 dev_dependencies:
+  shelf_router_generator: ^0.7.2+4
   build_runner: ^1.10.2
   build_verify: ^1.1.1
   functions_framework_builder: ^0.2.0
