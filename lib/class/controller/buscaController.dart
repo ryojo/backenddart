@@ -6,7 +6,9 @@ part 'buscaController.g.dart';
 
 class buscaController {
   var banco = Conexao();
+  bool _status = true;
 
+  //  filtrar o usuário por nome e idade numa lista sem organização 'todos'
   @Route.get("/lista/<nome>/<idade>")
   Future<Response> lista(Request request, String nome, String idade) async {
     var idadee = int.tryParse(idade);
@@ -15,12 +17,11 @@ class buscaController {
     for (var row in json) {
       print("listados" + row.toList().toString());
     }
-    try {
-      return Response.ok("listados: " + json.toList().toString());
-    } catch (erro) {
-      if (erro != json) {
-        return Response.notFound("não encontrado na pesquisa" + erro);
-      }
+    //tratamento em caso não encontrar o usuário
+    if (json.isNotEmpty) {
+      return Response.ok("buscando por: $json");
+    } else {
+      return Response.notFound("usuário não foi encontrado!");
     }
   }
 
