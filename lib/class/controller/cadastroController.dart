@@ -1,3 +1,4 @@
+import 'package:backenddart/class/models/cadastroModel.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'dart:async';
@@ -18,8 +19,9 @@ class cadastroController {
   FutureOr<Response> adicionarUser(
       Request request, String nome, String idade) async {
     var idadee = int.tryParse(idade);
+    var cdm = cadastroModel(nome: nome, idade: idadee);
+    var insert = await banco.insert_user(nome, idadee, cdm);
 
-    var insert = await banco.insert_user(nome, idadee);
     try {
       return Response.ok("cadastro de: $nome sua idade é $idadee  ");
     } catch (erro) {

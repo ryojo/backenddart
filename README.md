@@ -76,3 +76,6 @@ SERVIDOR DART
 
 e depois rodar o seu servidor abrindo o diretorio do projeto em seguida 
 digite no terminal: "dart bin/server.dart" 
+
+
+ // agora com a novas pastas incluindo uma arquitetura MVC básica, feito sem nenhuma teoria. 

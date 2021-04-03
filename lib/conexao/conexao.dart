@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:backenddart/class/models/cadastroModel.dart';
 import 'package:postgres/postgres.dart';
 import 'package:shelf/shelf.dart';
 
@@ -25,7 +26,7 @@ class Conexao {
 
   _inicializarBanco() async {
     var inicializar = PostgreSQLConnection('localhost', 5432, "backend",
-        username: "postgres", password: "bem vidos1");
+        username: "postgres", password: "666");
 
     await inicializar.open();
 
@@ -33,21 +34,23 @@ class Conexao {
   }
 
   // inserir usuarios na conta
-  insert_user(String nome, int idade) async {
+  insert_user(String nome, int idade, cadastroModel cdm) async {
     PostgreSQLConnection id = await db;
 
-    var banco = await id
-        .query("INSERT INTO usuario (nome,idade) VALUES ('$nome',$idade)");
+    var banco = await id.query(
+        "INSERT INTO usuario (nome,idade) VALUES ('$nome',$idade)",
+        substitutionValues: cdm.toMap());
 
     return banco;
     // id.execute(banco.toString());
   }
 
   //busca usuarios
-  buscar_user(String nome, int idade) async {
+  buscar_user(String nome, int idade, cadastroModel cdm) async {
     PostgreSQLConnection ps = await db;
     var banco = await ps.query(
-        "SELECT nome, idade FROM usuario WHERE nome='$nome' and idade=$idade");
+        "SELECT nome, idade FROM usuario WHERE nome='$nome' and idade=$idade",
+        substitutionValues: cdm.toMap());
 
     return banco;
   }

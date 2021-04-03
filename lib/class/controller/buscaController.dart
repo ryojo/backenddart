@@ -1,3 +1,4 @@
+import 'package:backenddart/class/models/cadastroModel.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
@@ -10,12 +11,17 @@ class buscaController {
 
   //  filtrar o usuário por nome e idade numa lista sem organização 'todos'
   @Route.get("/lista/<nome>/<idade>")
-  Future<Response> lista(Request request, String nome, String idade) async {
+  Future<Response> lista(
+    Request request,
+    String nome,
+    String idade,
+  ) async {
     var idadee = int.tryParse(idade);
-    List<List<dynamic>> json = await banco.buscar_user(nome, idadee);
+    var cdm = cadastroModel(nome: nome, idade: idadee);
+    List<List<dynamic>> json = await banco.buscar_user(nome, idadee, cdm);
 
     for (var row in json) {
-      print("listados" + row.toList().toString());
+      print("pesquisa: " + cdm.toMap().toString());
     }
     //tratamento em caso não encontrar o usuário
     if (json.isNotEmpty) {
